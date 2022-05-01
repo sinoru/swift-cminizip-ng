@@ -41,7 +41,7 @@ let package = Package(
                 .linkedFramework("Security", .when(platforms: [.iOS, .macOS, .tvOS, .watchOS])),
                 .linkedLibrary("ssl", .when(platforms: [.android, .linux])),
                 .linkedLibrary("crypto", .when(platforms: [.android, .linux])),
-                .linkedLibrary("iconv"),
+                .linkedLibrary("iconv", .when(platforms: [.iOS, .macOS, .tvOS, .watchOS])),
             ]),
     ]
 )
