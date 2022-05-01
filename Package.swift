@@ -39,7 +39,6 @@ let package = Package(
                 .linkedLibrary("bz2"),
                 .linkedFramework("CoreFoundation", .when(platforms: [.iOS, .macOS, .tvOS, .watchOS])),
                 .linkedFramework("Security", .when(platforms: [.iOS, .macOS, .tvOS, .watchOS])),
-                .linkedFramework("CommonCrypto", .when(platforms: [.iOS, .macOS, .tvOS, .watchOS])),
                 .linkedLibrary("ssl", .when(platforms: [.android, .linux])),
                 .linkedLibrary("iconv"),
             ]),
