@@ -20,6 +20,8 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: 'true'
       - uses: sinoru/actions-setup-xcode@v2
         if: ${{ startsWith(matrix.operating-system, 'macos') }}
         with:
@@ -59,6 +61,8 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: 'true'
       - uses: sinoru/actions-setup-xcode@v2
         with:
           xcode-version: ${{ matrix.xcode-version }}
