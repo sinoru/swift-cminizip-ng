@@ -25,7 +25,7 @@ jobs:
       - uses: sinoru/actions-setup-xcode@v2
         if: ${{ startsWith(matrix.operating-system, 'macos') }}
         with:
-          xcode-version: "11.7"
+          xcode-version: "12.0.1"
           apple-id: ${{ secrets.APPLE_ID }}
           apple-id-password: ${{ secrets.APPLE_ID_PASSWORD }}
       - uses: sinoru/actions-setup-swift@v2
