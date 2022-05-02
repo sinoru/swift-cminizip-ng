@@ -25,7 +25,7 @@ let package = Package(
                 .define("HAVE_INTTYPES_H"),
                 .define("__USE_LARGEFILE64"),
                 .define("_LARGEFILE64_SOURCE"),
-                .define("HAVE_LIBCOMP", .when(platforms: [.iOS, .macOS, .tvOS, .watchOS])),
+                .define("HAVE_LIBCOMP", .when(platforms: [.iOS, .macOS, .macCatalyst, .tvOS, .watchOS])),
                 .define("HAVE_ZLIB", .when(platforms: [.android, .linux])),
                 .define("ZLIB_COMPAT"),
                 .define("HAVE_BZIP2"),
@@ -34,14 +34,14 @@ let package = Package(
                 .define("HAVE_ICONV"),
             ],
             linkerSettings: [
-                .linkedLibrary("compression", .when(platforms: [.iOS, .macOS, .tvOS, .watchOS])),
+                .linkedLibrary("compression", .when(platforms: [.iOS, .macOS, .macCatalyst, .tvOS, .watchOS])),
                 .linkedLibrary("z", .when(platforms: [.android, .linux])),
                 .linkedLibrary("bz2"),
-                .linkedFramework("CoreFoundation", .when(platforms: [.iOS, .macOS, .tvOS, .watchOS])),
-                .linkedFramework("Security", .when(platforms: [.iOS, .macOS, .tvOS, .watchOS])),
+                .linkedFramework("CoreFoundation", .when(platforms: [.iOS, .macOS, .macCatalyst, .tvOS, .watchOS])),
+                .linkedFramework("Security", .when(platforms: [.iOS, .macOS, .macCatalyst, .tvOS, .watchOS])),
                 .linkedLibrary("ssl", .when(platforms: [.android, .linux])),
                 .linkedLibrary("crypto", .when(platforms: [.android, .linux])),
-                .linkedLibrary("iconv", .when(platforms: [.iOS, .macOS, .tvOS, .watchOS])),
+                .linkedLibrary("iconv", .when(platforms: [.iOS, .macOS, .macCatalyst, .tvOS, .watchOS])),
             ]),
     ]
 )
