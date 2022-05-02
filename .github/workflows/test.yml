@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         operating-system: ["ubuntu-18.04", "ubuntu-20.04", "macos-11", "macos-12"]
-        swift-version: ["5.3.3", "5.4.3", "5.5.3", "5.6.1"]
+        swift-version: ["5.2.5", "5.3.3", "5.4.3", "5.5.3", "5.6.1"]
     runs-on: ${{ matrix.operating-system }}
     steps:
       - uses: actions/checkout@v3
@@ -41,23 +41,17 @@ jobs:
       fail-fast: false
       matrix:
         operating-system: ["macos-11", "macos-12"]
-        xcode-version: ["12.4", "12.5.1", "13.0", "13.3.1"]
+        xcode-version: ["11.7", "12.0.1", "12.5.1", "13.0", "13.3.1"]
         xcode-destination: [
           "platform=OS X,arch=x86_64",
           "platform=OS X,arch=x86_64,variant=Mac Catalyst",
           "platform=iOS Simulator,name=iPhone 8,OS=latest",
-          "platform=tvOS Simulator,name=Apple TV 4K (2nd generation),OS=latest",
+          "platform=tvOS Simulator,name=Apple TV 4K,OS=latest",
           "platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm,OS=latest",
         ]
         exclude:
           - operating-system: macos-11
             xcode-version: "13.3.1"
-          - xcode-version: "12.0.1"
-            xcode-destination: "platform=OS X,arch=x86_64,variant=Mac Catalyst"
-          - xcode-version: "12.5.1"
-            xcode-destination: "platform=OS X,arch=x86_64,variant=Mac Catalyst"
-          - xcode-version: "13.0"
-            xcode-destination: "platform=OS X,arch=x86_64,variant=Mac Catalyst"
     runs-on: ${{ matrix.operating-system }}
     steps:
       - uses: actions/checkout@v3
