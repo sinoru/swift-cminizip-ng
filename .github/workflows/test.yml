@@ -46,13 +46,6 @@ jobs:
       matrix:
         operating-system: ["macos-11", "macos-12"]
         xcode-version: ["11.7", "12.5.1", "13.3.1"]
-        xcode-destination: [
-          "platform=OS X,arch=x86_64",
-          "platform=OS X,arch=x86_64,variant=Mac Catalyst",
-          "platform=iOS Simulator,name=iPhone 8,OS=latest",
-          "platform=tvOS Simulator,name=Apple TV 4K,OS=latest",
-          "platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm,OS=latest",
-        ]
         exclude:
           - operating-system: macos-11
             xcode-version: "13.3.1"
@@ -69,6 +62,18 @@ jobs:
       - name: Resolve Package Dependencies
         run: xcodebuild -resolvePackageDependencies
       - name: Analyze
-        run: xcodebuild -scheme minizip -destination '${{ matrix.xcode-destination }}' analyze
+        run: |
+          xcodebuild -scheme minizip analyze \
+            -destination 'platform=OS X,arch=x86_64' \
+            -destination 'platform=OS X,arch=x86_64,variant=Mac Catalyst' \
+            -destination 'platform=iOS Simulator,name=iPhone 8,OS=latest' \
+            -destination 'tvOS Simulator,name=Apple TV 4K,OS=latest' \
+            -destination 'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm,OS=latest'
       - name: Run
-        run: xcodebuild -scheme minizip -destination '${{ matrix.xcode-destination }}' run
+        run: |
+          xcodebuild -scheme minizip run \
+            -destination 'platform=OS X,arch=x86_64' \
+            -destination 'platform=OS X,arch=x86_64,variant=Mac Catalyst' \
+            -destination 'platform=iOS Simulator,name=iPhone 8,OS=latest' \
+            -destination 'tvOS Simulator,name=Apple TV 4K,OS=latest' \
+            -destination 'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm,OS=latest'
