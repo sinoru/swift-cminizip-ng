@@ -3,6 +3,14 @@
 
 import PackageDescription
 
+var applePlatforms: [Platform] {
+    #if swift(>=5.5)
+    return [.iOS, .macOS, .macCatalyst, .tvOS, .watchOS]
+    #else
+    return [.iOS, .macOS, .tvOS, .watchOS]
+    #endif
+}
+
 let package = Package(
     name: "swift-cminizip-ng",
     products: [
@@ -25,7 +33,7 @@ let package = Package(
                 .define("HAVE_INTTYPES_H"),
                 .define("__USE_LARGEFILE64"),
                 .define("_LARGEFILE64_SOURCE"),
-                .define("HAVE_LIBCOMP", .when(platforms: [.iOS, .macOS, .macCatalyst, .tvOS, .watchOS])),
+                .define("HAVE_LIBCOMP", .when(platforms: applePlatforms)),
                 .define("HAVE_ZLIB", .when(platforms: [.android, .linux])),
                 .define("ZLIB_COMPAT"),
                 .define("HAVE_BZIP2"),
@@ -34,14 +42,14 @@ let package = Package(
                 .define("HAVE_ICONV"),
             ],
             linkerSettings: [
-                .linkedLibrary("compression", .when(platforms: [.iOS, .macOS, .macCatalyst, .tvOS, .watchOS])),
+                .linkedLibrary("compression", .when(platforms: applePlatforms)),
                 .linkedLibrary("z", .when(platforms: [.android, .linux])),
                 .linkedLibrary("bz2"),
-                .linkedFramework("CoreFoundation", .when(platforms: [.iOS, .macOS, .macCatalyst, .tvOS, .watchOS])),
-                .linkedFramework("Security", .when(platforms: [.iOS, .macOS, .macCatalyst, .tvOS, .watchOS])),
+                .linkedFramework("CoreFoundation", .when(platforms: applePlatforms)),
+                .linkedFramework("Security", .when(platforms: applePlatforms)),
                 .linkedLibrary("ssl", .when(platforms: [.android, .linux])),
                 .linkedLibrary("crypto", .when(platforms: [.android, .linux])),
-                .linkedLibrary("iconv", .when(platforms: [.iOS, .macOS, .macCatalyst, .tvOS, .watchOS])),
+                .linkedLibrary("iconv", .when(platforms: applePlatforms)),
             ]),
     ]
 )
