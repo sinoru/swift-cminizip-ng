@@ -11,6 +11,35 @@ var applePlatforms: [Platform] {
     #endif
 }
 
+var cSettings: [CSetting] {
+    [
+        .define("HAVE_STDINT_H"),
+        .define("HAVE_INTTYPES_H"),
+        .define("__USE_LARGEFILE64"),
+        .define("_LARGEFILE64_SOURCE"),
+        .define("HAVE_LIBCOMP", .when(platforms: applePlatforms)),
+        .define("HAVE_ZLIB", .when(platforms: [.android, .linux])),
+        .define("ZLIB_COMPAT"),
+        .define("HAVE_BZIP2"),
+        .define("HAVE_PKCRYPT"),
+        .define("HAVE_WZAES"),
+        .define("HAVE_ICONV"),
+    ]
+}
+
+var linkerSettings: [LinkerSetting] {
+    [
+        .linkedLibrary("compression", .when(platforms: applePlatforms)),
+        .linkedLibrary("z", .when(platforms: [.android, .linux])),
+        .linkedLibrary("bz2"),
+        .linkedFramework("CoreFoundation", .when(platforms: applePlatforms)),
+        .linkedFramework("Security", .when(platforms: applePlatforms)),
+        .linkedLibrary("ssl", .when(platforms: [.android, .linux])),
+        .linkedLibrary("crypto", .when(platforms: [.android, .linux])),
+        .linkedLibrary("iconv", .when(platforms: applePlatforms)),
+    ]
+}
+
 let package = Package(
     name: "swift-cminizip-ng",
     products: [
@@ -18,6 +47,9 @@ let package = Package(
         .library(
             name: "Cminizip-ng",
             targets: ["Cminizip-ng"]),
+        .executable(
+            name: "minizip",
+            targets: ["minizip"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -28,28 +60,12 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "Cminizip-ng",
-            cSettings: [
-                .define("HAVE_STDINT_H"),
-                .define("HAVE_INTTYPES_H"),
-                .define("__USE_LARGEFILE64"),
-                .define("_LARGEFILE64_SOURCE"),
-                .define("HAVE_LIBCOMP", .when(platforms: applePlatforms)),
-                .define("HAVE_ZLIB", .when(platforms: [.android, .linux])),
-                .define("ZLIB_COMPAT"),
-                .define("HAVE_BZIP2"),
-                .define("HAVE_PKCRYPT"),
-                .define("HAVE_WZAES"),
-                .define("HAVE_ICONV"),
-            ],
-            linkerSettings: [
-                .linkedLibrary("compression", .when(platforms: applePlatforms)),
-                .linkedLibrary("z", .when(platforms: [.android, .linux])),
-                .linkedLibrary("bz2"),
-                .linkedFramework("CoreFoundation", .when(platforms: applePlatforms)),
-                .linkedFramework("Security", .when(platforms: applePlatforms)),
-                .linkedLibrary("ssl", .when(platforms: [.android, .linux])),
-                .linkedLibrary("crypto", .when(platforms: [.android, .linux])),
-                .linkedLibrary("iconv", .when(platforms: applePlatforms)),
-            ]),
+            cSettings: cSettings,
+            linkerSettings: linkerSettings),
+        .target(
+            name: "minizip",
+            dependencies: ["Cminizip-ng"],
+            cSettings: cSettings,
+            linkerSettings: linkerSettings),
     ]
 )
