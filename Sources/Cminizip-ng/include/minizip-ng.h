@@ -20,11 +20,11 @@
 #include "../../../ThirdParty/minizip-ng/mz_zip_rw.h"
 
 #ifdef HAVE_LIBCOMP
-#include "../../ThirdParty/minizip-ng/mz_strm_libcomp.h"
+#include "../../../ThirdParty/minizip-ng/mz_strm_libcomp.h"
 #endif
 
 #ifdef HAVE_ZLIB
-#include "../../ThirdParty/minizip-ng/mz_strm_zlib.h"
+#include "../../../ThirdParty/minizip-ng/mz_strm_zlib.h"
 #endif
 
 #endif /* minizip_ng_h */
