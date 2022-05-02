@@ -35,6 +35,10 @@ jobs:
         run: swift build
         env:
           SWIFT_VERSION: ${{ matrix.swift-version }}
+      - name: Run
+        run: swift run
+        env:
+          SWIFT_VERSION: ${{ matrix.swift-version }}
 
   xcode:
     strategy:
@@ -65,4 +69,6 @@ jobs:
       - name: Resolve Package Dependencies
         run: xcodebuild -resolvePackageDependencies
       - name: Analyze
-        run: xcodebuild -scheme swift-cminizip-ng -destination '${{ matrix.xcode-destination }}' analyze
+        run: xcodebuild -scheme minizip -destination '${{ matrix.xcode-destination }}' analyze
+      - name: Run
+        run: xcodebuild -scheme minizip -destination '${{ matrix.xcode-destination }}' run
