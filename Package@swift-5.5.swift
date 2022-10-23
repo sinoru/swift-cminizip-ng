@@ -1,14 +1,14 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.5
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 var applePlatforms: [Platform] {
-    return [.iOS, .macOS, .tvOS, .watchOS]
+    return [.iOS, .macOS, .macCatalyst, .tvOS, .watchOS]
 }
 
 var otherPlatforms: [Platform] {
-    return [.android, .linux]
+    return [.android, .linux, .wasi, .windows]
 }
 
 var cSettings: [CSetting] {
@@ -62,7 +62,7 @@ let package = Package(
             name: "Cminizip-ng",
             cSettings: cSettings,
             linkerSettings: linkerSettings),
-        .target(
+        .executableTarget(
             name: "minizip",
             dependencies: ["Cminizip-ng"],
             cSettings: cSettings,
