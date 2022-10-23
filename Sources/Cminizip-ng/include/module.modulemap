@@ -1,4 +1,0 @@
-module Cminizip_ng {
-    umbrella "."
-    export *
-}
